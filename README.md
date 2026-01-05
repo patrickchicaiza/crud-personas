@@ -1,98 +1,336 @@
+# 🚀 **CRUD Personas API - NestJS**
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p align="center">
+  <img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS"/>
+  <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+  <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"/>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## 📋 **Descripción del Proyecto**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API RESTful completa para gestión de personas, construida con **NestJS**, **TypeORM**, **PostgreSQL** y **Docker**. Este proyecto implementa un sistema CRUD (Crear, Leer, Actualizar, Eliminar) con arquitectura modular, validación de datos, documentación automática y contenerización profesional.
 
-## Project setup
+**Características principales:**
+- ✅ CRUD completo para entidad Personas
+- ✅ Arquitectura modular y escalable
+- ✅ Documentación automática con Swagger
+- ✅ Contenerización con Docker y Docker Compose
+- ✅ Validación de datos con class-validator
+- ✅ Variables de entorno para configuración
+- ✅ Health checks para monitoreo
+- ✅ Configuración multi-ambiente
 
-```bash
-$ npm install
+## 🏗️ **Arquitectura del Proyecto**
+
+```
+crud-personas/
+├── src/
+│   ├── modules/
+│   │   └── persons/
+│   │       ├── entities/
+│   │       │   └── person.entity.ts      # Entidad Persona
+│   │       ├── dto/
+│   │       │   ├── create-person.dto.ts  # DTO para creación
+│   │       │   └── update-person.dto.ts  # DTO para actualización
+│   │       ├── persons.controller.ts     # Controlador REST
+│   │       ├── persons.service.ts        # Lógica de negocio
+│   │       └── persons.module.ts         # Módulo Personas
+│   ├── common/
+│   │   └── database/
+│   │       └── database.module.ts        # Configuración BD
+│   ├── app.module.ts                     # Módulo principal
+│   └── main.ts                          # Punto de entrada
+├── docker/
+│   ├── Dockerfile                       # Imagen Docker
+│   └── docker-compose.yml               # Orquestación servicios
+├── .env.example                         # Variables de entorno ejemplo
+├── package.json
+└── README.md
 ```
 
-## Compile and run the project
+## 🚀 **Empezar Rápido**
+
+### **Prerrequisitos**
+- [Node.js](https://nodejs.org/) (v18 o superior)
+- [Docker](https://www.docker.com/) y Docker Compose
+- [PostgreSQL](https://www.postgresql.org/) (opcional, viene en Docker)
+
+### **Instalación**
 
 ```bash
-# development
-$ npm run start
+# 1. Clonar repositorio
+git clone https://github.com/tu-usuario/crud-personas.git
+cd crud-personas
 
-# watch mode
-$ npm run start:dev
+# 2. Instalar dependencias
+npm install
 
-# production mode
-$ npm run start:prod
+# 3. Configurar variables de entorno
+cp .env.example .env
+# Editar .env con tus configuraciones
 ```
 
-## Run tests
+### **Ejecutar con Docker (Recomendado)**
 
 ```bash
-# unit tests
-$ npm run test
+# Levantar todos los servicios (API + PostgreSQL)
+docker-compose up -d
 
-# e2e tests
-$ npm run test:e2e
+# Verificar que todo está funcionando
+docker-compose ps
 
-# test coverage
-$ npm run test:cov
+# Ver logs en tiempo real
+docker-compose logs -f api
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### **Ejecutar sin Docker**
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# 1. Asegúrate de tener PostgreSQL corriendo
+# 2. Configura las variables de entorno en .env
+# 3. Ejecutar en modo desarrollo
+npm run start:dev
+
+# 4. La API estará disponible en: http://localhost:3000
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 📡 **Endpoints de la API**
 
-## Resources
+### **Documentación Interactiva**
+Una vez ejecutada la aplicación, accede a la documentación Swagger:
+```
+http://localhost:3000/api
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### **Endpoints Disponibles**
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `GET` | `/persons` | Obtener todas las personas |
+| `GET` | `/persons/:id` | Obtener una persona por ID |
+| `POST` | `/persons` | Crear nueva persona |
+| `PATCH` | `/persons/:id` | Actualizar persona existente |
+| `DELETE` | `/persons/:id` | Eliminar persona |
+| `GET` | `/health` | Estado del sistema |
 
-## Support
+### **Ejemplo de Persona**
+```json
+{
+  "id": 1,
+  "name": "Juan Pérez",
+  "email": "juan@example.com",
+  "age": 30,
+  "active": true,
+  "createdAt": "2024-12-30T12:00:00.000Z",
+  "updatedAt": "2024-12-30T12:00:00.000Z"
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🐳 **Configuración Docker**
 
-## Stay in touch
+### **Servicios Disponibles**
+| Servicio | Puerto | Descripción |
+|----------|--------|-------------|
+| **API NestJS** | 3000 | API principal |
+| **PostgreSQL** | 5432 | Base de datos |
+| **PgAdmin** | 8080 | Administración BD (opcional) |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### **Comandos Docker Útiles**
+```bash
+# Construir imágenes
+docker-compose build
 
-## License
+# Levantar servicios
+docker-compose up -d
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Detener servicios
+docker-compose down
+
+# Ver logs
+docker-compose logs -f
+
+# Ejecutar comandos dentro del contenedor
+docker-compose exec api npm run test
+
+# Limpiar todo (contenedores, volúmenes, redes)
+docker-compose down -v
+```
+
+## ⚙️ **Configuración de Entorno**
+
+Crea un archivo `.env` basado en `.env.example`:
+
+```env
+# Servidor
+PORT=3000
+NODE_ENV=development
+
+# Base de Datos PostgreSQL
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres123
+DB_NAME=crud_personas
+
+# Docker (para docker-compose)
+COMPOSE_PROJECT_NAME=crud-personas
+```
+
+## 🧪 **Testing**
+
+```bash
+# Ejecutar tests unitarios
+npm run test
+
+# Ejecutar tests en modo watch
+npm run test:watch
+
+# Ejecutar tests e2e
+npm run test:e2e
+
+# Ver cobertura de tests
+npm run test:cov
+```
+
+## 📊 **Health Checks**
+
+La API incluye endpoints de salud para monitoreo:
+
+```bash
+# Health check básico
+GET http://localhost:3000/health
+
+# Health check detallado
+GET http://localhost:3000/health/detailed
+```
+
+Respuesta esperada:
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-12-30T12:00:00.000Z",
+  "services": {
+    "database": "connected",
+    "memory": "healthy"
+  }
+}
+```
+
+## 🔧 **Scripts NPM Disponibles**
+
+| Script | Descripción |
+|--------|-------------|
+| `npm run start` | Inicia la aplicación en producción |
+| `npm run start:dev` | Inicia con hot-reload para desarrollo |
+| `npm run start:debug` | Inicia en modo debug |
+| `npm run start:prod` | Compila y ejecuta en producción |
+| `npm run build` | Compila TypeScript a JavaScript |
+| `npm run test` | Ejecuta tests unitarios |
+| `npm run test:watch` | Ejecuta tests en modo watch |
+| `npm run test:cov` | Genera reporte de cobertura |
+| `npm run test:e2e` | Ejecuta tests end-to-end |
+| `npm run lint` | Ejecuta linter |
+| `npm run format` | Formatea el código |
+
+## 🗄️ **Base de Datos**
+
+### **Migraciones**
+```bash
+# Generar migración
+npm run migration:generate -- -n NombreMigracion
+
+# Ejecutar migraciones
+npm run migration:run
+
+# Revertir migración
+npm run migration:revert
+```
+
+### **Diagrama de Entidad Persona**
+```sql
+CREATE TABLE persons (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  age INTEGER CHECK (age >= 0),
+  active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 🛡️ **Características de Seguridad**
+
+- ✅ Validación automática de datos de entrada
+- ✅ Sanitización de parámetros
+- ✅ Configuración CORS para desarrollo/producción
+- ✅ Rate limiting configurable
+- ✅ Headers de seguridad HTTP
+- ✅ Variables de entorno para datos sensibles
+
+## 📈 **Métricas y Monitoreo**
+
+La API incluye:
+- Logs estructurados por niveles (debug, info, warn, error)
+- Métricas de rendimiento
+- Health checks periódicos
+- Alertas configurables
+
+## 🔄 **Workflow de Desarrollo**
+
+1. **Clona el repositorio**
+2. **Configura variables de entorno** (`cp .env.example .env`)
+3. **Instala dependencias** (`npm install`)
+4. **Levanta servicios con Docker** (`docker-compose up -d`)
+5. **Ejecuta migraciones** (`npm run migration:run`)
+6. **Desarrolla con hot-reload** (`npm run start:dev`)
+7. **Ejecuta tests** (`npm run test`)
+8. **Crea Pull Request**
+
+## 🤝 **Contribuir**
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📚 **Recursos Adicionales**
+
+- [Documentación NestJS](https://docs.nestjs.com/)
+- [TypeORM Documentation](https://typeorm.io/)
+- [Docker Documentation](https://docs.docker.com/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+
+## 👥 **Autores**
+
+- **Tu Nombre** - [@tu-usuario](https://github.com/tu-usuario)
+
+## 📄 **Licencia**
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 🙏 **Agradecimientos**
+
+- [NestJS Team](https://nestjs.com/) por el framework increíble
+- Todos los contribuidores que han ayudado a mejorar este proyecto
+
+---
+
+<p align="center">
+  <sub>Construido con ❤️ usando <a href="https://nestjs.com/">NestJS</a></sub>
+</p>
+
+## 📞 **Soporte**
+
+Para soporte, abre un issue en el repositorio o únete a nuestro canal de Discord.
+
+---
+
+⭐ **¿Te gusta este proyecto? ¡Dale una estrella en GitHub!**
