@@ -1,20 +1,37 @@
-// Reemplaza TODO el contenido con:
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // CORS - PERMITE TU FRONTEND
+  // CORS para desarrollo
+  const allowedOrigins = [
+    'http://localhost:3000',  // React default
+    'http://localhost:5173',  // Vite default
+    'http://localhost:4200',  // Angular default
+  ];
+  
   app.enableCors({
-    origin: 'http://localhost:3000',  // React en 3000
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
   
-  await app.listen(3000);
-  console.log('✅ Backend corriendo en: http://localhost:3000');
-  console.log('✅ CORS habilitado para: http://localhost:3000');
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  
+  console.log('='.repeat(50));
+  console.log(`🚀 Backend NestJS CRUD Personas`);
+  console.log(`📍 URL: http://localhost:${port}`);
+  console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🗄️  Base de datos: ${process.env.DB_HOST}:${process.env.DB_PORT}`);
+  console.log(`🔗 CORS habilitado para: ${allowedOrigins.join(', ')}`);
+  console.log('='.repeat(50));
+  
+  // Health check endpoint automático
+  console.log(`✅ Health check: http://localhost:${port}/health`);
+  console.log(`📚 Swagger: http://localhost:${port}/api (si tienes instalado)`);
 }
 
 bootstrap();

@@ -10,16 +10,18 @@ import { PersonsModule } from './persons/persons.module';
     }),
 
     TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: config.get('DB_HOST'),
-        port: +config.get('DB_PORT'),
-        username: config.get('DB_USERNAME'),  // ← USA DB_USERNAME
-        password: config.get('DB_PASSWORD'),
-        database: config.get('DB_DATABASE'),  // ← USA DB_DATABASE
+        host: configService.get('DB_HOST', 'localhost'),
+        port: configService.get<number>('DB_PORT', 5433),  // ← 5433
+        username: configService.get('DB_USERNAME', 'postgres'),
+        password: configService.get('DB_PASSWORD', 'postgres123'),
+        database: configService.get('DB_DATABASE', 'crud_db'),
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: configService.get('NODE_ENV') !== 'production',
+        logging: configService.get('NODE_ENV') === 'development',
       }),
     }),
 
@@ -27,4 +29,4 @@ import { PersonsModule } from './persons/persons.module';
   ],
 })
 
-export class AppModule {}
+export class AppModule { }
