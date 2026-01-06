@@ -6,7 +6,8 @@ async function bootstrap() {
   
   // CORS para desarrollo
   const allowedOrigins = [
-    'http://localhost:3000',  // React default
+    'http://localhost:3000',  // Backend mismo (para pruebas directas)
+    'http://localhost:3001',  // React (Create React App si cambia puerto)
     'http://localhost:5173',  // Vite default
     'http://localhost:4200',  // Angular default
   ];
