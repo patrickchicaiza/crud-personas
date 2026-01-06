@@ -1,32 +1,55 @@
+version: '3.8'
 services:
+  # 1. POSTGRESQL
   postgres:
     image: postgres:15
     container_name: postgres_db
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: postgres123
       POSTGRES_DB: crud_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  app:
-    build: .
+  # 2. BACKEND (NestJS)
+  backend:
+    build: ./backend
     container_name: nestjs_app
     restart: always
     depends_on:
       - postgres
     ports:
-      - "3000:3000"
-    environment:  # ← AÑADE ESTO, más seguro que env_file
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_DATABASE=crud_db
-    command: sh -c "sleep 5 && node dist/main"
+      - "3001:3000"  # Backend en puerto 3001
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres123
+      DB_DATABASE: crud_db
+    command: sh -c "sleep 5 && npm run start:prod"
+
+  # 3. FRONTEND (React) - ¡NUEVO!
+  frontend:
+    build: ./frontend
+    container_name: react_app
+    restart: always
+    depends_on:
+      - backend  # Espera que backend esté listo
+    ports:
+      - "3000:3000"  # Frontend en puerto 3000 (¡ahora sí!)
+    environment:
+      - REACT_APP_API_URL=http://backend:3000  # ← CLAVE: usa nombre del servicio
+      - CHOKIDAR_USEPOLLING=true  # Para hot reload
+    # Para desarrollo con hot reload:
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - /app/node_modules
+    stdin_open: true
+    tty: true
 
 volumes:
   postgres_data:

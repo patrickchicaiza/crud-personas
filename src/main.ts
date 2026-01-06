@@ -1,16 +1,20 @@
-// Opción A: Elimina completamente las líneas de crypto
+// Reemplaza TODO el contenido con:
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // Obtener puerto desde .env o fallback a 3000
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 3000;
-
-  await app.listen(port);
-  console.log(`🚀 Application running on: http://localhost:${port}`);
+  
+  // CORS - PERMITE TU FRONTEND
+  app.enableCors({
+    origin: 'http://localhost:3000',  // React en 3000
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true
+  });
+  
+  await app.listen(3000);
+  console.log('✅ Backend corriendo en: http://localhost:3000');
+  console.log('✅ CORS habilitado para: http://localhost:3000');
 }
+
 bootstrap();

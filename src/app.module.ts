@@ -26,4 +26,5 @@ import { PersonsModule } from './persons/persons.module';
     PersonsModule,
   ],
 })
+
 export class AppModule {}
